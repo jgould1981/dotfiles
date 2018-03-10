@@ -1,0 +1,5 @@
+sudo add-apt-repository ppa:kamalmostafa/fldigi
+sudo apt-get update
+
+# sudo add-apt-repository ppa:ubuntu-hams-updates/ppa
+# sudo apt-get update

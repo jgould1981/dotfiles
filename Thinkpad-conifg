@@ -1,0 +1,9 @@
+sudo add-apt-repository ppa:linrunner/thinkpad-extras && sudo apt-get update
+sudo apt-get install configure-trackpoint 
+configure-trackpoint 
+sudo apt-get install hdaps-utils
+
+#sudo add-apt-repository ppa:fingerprint/fingerprint-gui && sudo apt-get update 
+#sudo apt install libpam-fprintd 
+#fprintd-enroll 
+sudo apt-get install vim-gtk3
