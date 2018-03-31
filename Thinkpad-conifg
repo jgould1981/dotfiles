@@ -1,19 +1,19 @@
 echo "Setting up Trackpoint Configuration Utility"
-#sudo add-apt-repository -y ppa:linrunner/thinkpad-extras && sudo apt-get update
-#sudo apt-get install -y configure-trackpoint 
-#configure-trackpoint 
+sudo add-apt-repository -y ppa:linrunner/thinkpad-extras && sudo apt-get update
+sudo apt-get install -y configure-trackpoint 
+configure-trackpoint 
 echo "Done setting up Trackpooint Configuration Utility"
 echo "Setting up Finger Print Reader"
-#sudo apt-get install hdaps-utils
-#sudo add-apt-repository -y ppa:fingerprint/fingerprint-gui && sudo apt-get update 
-#sudo apt install -y libpam-fprintd 
+sudo apt-get install hdaps-utils
+sudo add-apt-repository -y ppa:fingerprint/fingerprint-gui && sudo apt-get update 
+sudo apt install -y libpam-fprintd 
 echo "Enrolling first Finger Print"
-#fprintd-enroll 
+fprintd-enroll 
 echo "Done Setting up Finger Print Reader"
 echo "Installing vim"
-#sudo apt-get install -y vim-gtk3
+sudo apt-get install -y vim-gtk3
 echo "Copying vimrc to the proper location..."
-#cp ~/dotfiles/vimrc ~/.vimrc
+cp ~/dotfiles/vimrc ~/.vimrc
 echo "vimrc placed in the proper location"
 echo "Setting up NBEMS and copying radio XML file to the proper location"
 sudo add-apt-repository -y ppa:kamalmostafa/fldigi && sudo apt-get update

@@ -1,0 +1,11 @@
+echo "Installing vim"
+#sudo apt-get install -y vim-gtk3
+echo "Copying vimrc to the proper location..."
+#cp ~/dotfiles/vimrc ~/.vimrc
+echo "vimrc placed in the proper location"
+echo "Setting up NBEMS and copying radio XML file to the proper location"
+sudo add-apt-repository -y ppa:kamalmostafa/fldigi && sudo apt-get update
+sudo apt-get install -y fldigi flwrap flrig flmsg
+mkdir -p ~/.fldigi/rigs
+wget https://sourceforge.net/projects/fldigi/files/xmls/yaesu/FT-991.xml -O ~/.fldigi/rigs/FT-991.XML
+echo "Done setting up NBEMS"
