@@ -6,20 +6,23 @@ echo "Done setting up Trackpooint Configuration Utility"
 echo "Setting up Finger Print Reader"
 sudo apt-get install hdaps-utils
 sudo add-apt-repository -y ppa:fingerprint/fingerprint-gui && sudo apt-get update 
-sudo apt install -y libpam-fprintd git 
+sudo apt install -y libpam-fprintd 
 echo "Enrolling first Finger Print"
 fprintd-enroll 
 echo "Done Setting up Finger Print Reader"
 echo "Installing vim"
 sudo apt-get install -y vim-gtk3
-echo "Cloning Git Repository..."
-cd ~ && git clone http://github.com/jgould1981/dotfiles.git
 echo "Copying vimrc to the proper location..."
 cp ~/dotfiles/vimrc ~/.vimrc
 echo "vimrc placed in the proper location"
+echo "Copying bash_aliases into correct location..."
+cp ~/dotfiles/bash_aliases ~/.bash_aliases
+cp ~/dotfiles/rsync_include ~/.rsync_include
 echo "Setting up NBEMS and copying radio XML file to the proper location"
 sudo add-apt-repository -y ppa:kamalmostafa/fldigi && sudo apt-get update
 sudo apt-get install -y fldigi flwrap flrig flmsg
 mkdir -p ~/.fldigi/rigs
 wget https://sourceforge.net/projects/fldigi/files/xmls/yaesu/FT-991.xml -O ~/.fldigi/rigs/FT-991.XML
 echo "Done setting up NBEMS"
+echo "Cloning folders from Server."
+rsync -rzvip --include-from="/home/jgould/.rsync_include" --exclude="/*" jgould@ember:~/. ~/.
