@@ -1,25 +1,26 @@
-ave this file as /etc/sbin/thinkpad-dock.sh
+#! /bin/bash -e
+# Save this file as /etc/sbin/thinkpad-dock.sh
 
 # NB: you will need to modify the username and tweak the xrandr
 # commands to suit your setup.
 
 # wait for the dock state to change
-sleep 0.5
+sleep 1 
 
-username=sgould
+username=jgould
 
 #export IFS=$"\n"
 
-if [[ "$ACTION" == "add" ]]; then
+if [[ "$ACTION" == "add" ]] ; then
   DOCKED=1
   logger -t DOCKING "Detected condition: docked"
-elif [[ "$ACTION" == "remove" ]]; then
+elif [[ "$ACTION" == "remove" ]] ; then
   DOCKED=0
   logger -t DOCKING "Detected condition: un-docked"
-else
-  logger -t DOCKING "Detected condition: unknown"
-  echo Please set env var \$ACTION to 'add' or 'remove'
-  exit 1
+#else
+#  logger -t DOCKING "Detected condition: unknown"
+#  echo Please set env var \$ACTION to 'add' or 'remove'
+#  exit 1
 fi
 
 # invoke from XSetup with NO_KDM_REBOOT otherwise you'll end up in a KDM reboot loop
@@ -32,44 +33,22 @@ for p in $*; do
 done
 
 function switch_to_local {
-  export DISPLAY=$1
+  export DISPLAY=:0
   #export XAUTHORITY=$(find /var/run/kdm -name "A${DISPLAY}-*")
   #export XAUTHORITY=/var/run/lightdm/sflaniga/xauthority
   logger -t DOCKING "Switching off HDMI2/3 and switching on LVDS1"
-  su $username -c '
-    /usr/bin/xrandr \
-      --output HDMI1 --off \
-      --output HDMI2 --off \
-      --output HDMI3 --off \
-      --output VGA1  --off \
-      --output eDP1  --auto \
-      --output LVDS1 --auto \
-    '
+  su $username -c ' /usr/bin/xrandr  --output HDMI-1 --off --output HDMI-2 --off --output HDMI-3 --off --output VGA-1  --off  --output LVDS-1 --auto '
 }
 
 function switch_to_external {
-  export DISPLAY=$1
+  export DISPLAY=:0
   #export XAUTHORITY=/var/run/lightdm/sflaniga/xauthority
   #export XAUTHORITY=$(find /var/run/kdm -name "A${DISPLAY}-*")
 
   # The Display port on the docking station is on HDMI2 - let's use it and turn off local display
   logger -t DOCKING "Switching off LVDS1 and switching on HDMI2/3"
 
-  su $username -c '
-    /usr/bin/xrandr \
-      --output eDP1  --off \
-      --output LVDS1 --off \
-      --output HDMI1 --off \
-      --output HDMI2 --auto \
-      --output HDMI3 --auto  \
-      --output VGA1  --auto \
-    '
-  # alternative:
-  # xrandr --output LVDS1 --off --output HDMI3 --primary --auto --pos 0x0
-  # --output HDMI2 --auto --rotate left --pos 1680x-600
-
-  # this will probably fail ("Configure crtc 2 failed"):
-  #/usr/bin/xrandr --output LVDS1 --auto
+  su $username -c ' /usr/bin/xrandr --output LVDS-1 --off --output HDMI-1 --off --output HDMI-3 --auto --primary --output HDMI-2 --auto --left-of HDMI-3 '
 }
 
 case "$DOCKED" in
